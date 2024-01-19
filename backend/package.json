@@ -1,0 +1,23 @@
+{
+  "name": "notes-app-backend",
+  "version": "1.0.0",
+  "description": "express api to capture notes-app notes in database",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "format": "prettier --write {**/,}*.js",
+    "lint": "prettier --check {**/,}*.js",
+    "dev": "nodemon server.js"
+  },
+  "author": "estib",
+  "license": "ISC",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^4.18.2",
+    "sqlite3": "^5.1.7"
+  },
+  "devDependencies": {
+    "nodemon": "^3.0.2",
+    "prettier": "^3.2.1"
+  }
+}

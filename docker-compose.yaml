@@ -1,0 +1,33 @@
+version: "3.8"
+services:
+  frontend:
+    restart: always
+    build:
+      context: frontend
+    ports:
+      - 5173:5173
+    stdin_open: true
+    volumes:
+      - ./frontend:/usr/src/app
+      - /usr/src/app/node_modules
+    networks:
+      - react-express
+    depends_on:
+      - backend
+
+  backend:
+    restart: always
+    build:
+      context: backend
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./backend:/usr/src/app
+      - /usr/src/app/node_modules
+    networks:
+      - react-express
+    expose:
+      - 3000
+
+networks:
+  react-express:

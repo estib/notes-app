@@ -1,0 +1,350 @@
+/*
+Full disclosure: this css was originally sourced from the reactrouter tutorial.
+https://reactrouter.com/en/main/start/tutorial
+
+The author of this notes app reviewed it, decided they liked it enough, and
+has been updating it to meet the needs of the notes app. 
+*/
+
+html {
+  box-sizing: border-box;
+}
+*,
+*:before,
+*:after {
+  box-sizing: inherit;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
+    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
+    monospace;
+}
+
+html,
+body {
+  height: 100%;
+  margin: 0;
+  line-height: 1.5;
+  color: #121212;
+}
+
+/*makes the buttons look like buttons. note the double box shadow for slight 3d effect.*/
+textarea,
+input,
+button {
+  font-size: 1rem;
+  font-family: inherit;
+  border: none;
+  border-radius: 8px;
+  padding: 0.5rem 0.75rem;
+  box-shadow: 0 0px 1px hsla(0, 0%, 0%, 0.2), 0 1px 2px hsla(0, 0%, 0%, 0.2);
+  background-color: white;
+  line-height: 1.5;
+  margin: 0;
+}
+button {
+  color: cornflowerblue;
+  font-weight: 500;
+}
+
+/*gives visual confirmation that a button can be selected as you hover over it*/
+textarea:hover,
+input:hover,
+button:hover {
+  box-shadow: 0 0px 1px hsla(0, 0%, 0%, 0.6), 0 1px 2px hsla(0, 0%, 0%, 0.2);
+}
+
+/*gives impresion of a button being pressed down*/
+button:active {
+  box-shadow: 0 0px 1px hsla(0, 0%, 0%, 0.4);
+  transform: translateY(1px);
+}
+
+/*Distinguish the delete buttons from normal buttons.*/
+form[action$="destroy"] button {
+  color: tomato;
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border-width: 0;
+}
+
+/*sets root route container*/
+#root {
+  display: flex;
+  height: 100%;
+  width: 100%;
+}
+
+#sidebar {
+  width: 22rem;
+  background-color: #f7f7f7;
+  border-right: solid 1px #e3e3e3;
+  display: flex;
+  flex-direction: column;
+}
+
+#sidebar > * {
+  padding-left: 1.5rem;
+  padding-right: 1.5rem;
+}
+
+#sidebar h1 {
+  font-size: 1rem;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  margin: 0;
+  padding: 1rem 2rem;
+  border-top: 1px solid #e3e3e3;
+  order: 1;
+  line-height: 1;
+}
+
+#sidebar > div {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding-top: 1rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid #e3e3e3;
+}
+
+#sidebar > div form {
+  position: relative;
+}
+
+/* format the search and tag filter bars */
+#sidebar > div form input {
+  width: 15rem;
+  padding-left: 2rem;
+  background-repeat: no-repeat;
+  background-position: 0.625rem 0.75rem;
+  background-size: 1rem;
+  position: relative;
+}
+
+#sidebar > div form input[type="search"] {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' class='h-6 w-6' fill='none' viewBox='0 0 24 24' stroke='%23999' stroke-width='2'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' d='M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z' /%3E%3C/svg%3E");
+}
+
+#sidebar > div form input.loading {
+  background-image: none;
+}
+
+#sidebar > div form input[type="tag_filter"] {
+  margin-top: 0.25rem;
+  background-image: url("data:image/svg+xml;charset=utf8,%3C?xml version='1.0' ?%3E%3C!DOCTYPE svg PUBLIC '-//W3C//DTD SVG 1.1//EN' 'http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd'%3E%3Csvg enable-background='new 0 0 32 32' height='32px' id='Layer_1' version='1.1' viewBox='0 0 32 32' width='32px' xml:space='preserve' xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink'%3E%3Cg id='tag'%3E%3Cpath clip-rule='evenodd' d='M31.391,13.883l-5-8c-0.73-1.169-2.012-1.88-3.391-1.88H4 c-2.209,0-4,1.791-4,4v16c0,2.209,1.791,4,4,4h19c1.379,0,2.66-0.711,3.391-1.881l5-8C32.203,16.827,32.203,15.18,31.391,13.883z M29.695,17.062l-5,8.002c-0.367,0.588-1.002,0.939-1.695,0.939H4c-1.103,0-2-0.898-2-2v-16c0-1.103,0.897-2,2-2h19 c0.693,0,1.328,0.352,1.695,0.939l5,8C30.098,15.587,30.098,16.419,29.695,17.062z' fill='%23333333' fill-rule='evenodd'/%3E%3Cpath clip-rule='evenodd' d='M23,13.003c-1.658,0-3,1.343-3,3c0,1.657,1.342,3,3,3 c1.656,0,3-1.344,3-3C26,14.346,24.656,13.003,23,13.003z M23,18.004c-1.105,0-2-0.896-2-2c0-1.104,0.895-2,2-2 c1.104,0,2,0.896,2,2C25,17.107,24.104,18.004,23,18.004z' fill='%23333333' fill-rule='evenodd'/%3E%3C/g%3E%3C/svg%3E");
+}
+
+#search-spinner {
+  width: 1rem;
+  height: 1rem;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24'%3E%3Cpath stroke='%23000' strokeLinecap='round' strokeLinejoin='round' strokeWidth='2' d='M20 4v5h-.582m0 0a8.001 8.001 0 00-15.356 2m15.356-2H15M4 20v-5h.581m0 0a8.003 8.003 0 0015.357-2M4.581 15H9' /%3E%3C/svg%3E");
+  animation: spin 1s infinite linear;
+  position: absolute;
+  left: 0.625rem;
+  top: 0.75rem;
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+#sidebar nav {
+  flex: 1;
+  overflow: auto;
+  padding-top: 1rem;
+}
+
+#sidebar nav a span {
+  float: right;
+  color: #eeb004;
+}
+#sidebar nav a.active span {
+  color: inherit;
+}
+
+i {
+  color: #818181;
+}
+#sidebar nav .active i {
+  color: inherit;
+}
+
+#sidebar ul {
+  padding: 0;
+  margin: 0;
+  list-style: none;
+}
+
+#sidebar li {
+  margin: 0.25rem 0;
+}
+
+#sidebar nav a {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  overflow: hidden;
+
+  white-space: pre;
+  padding: 0.5rem;
+  border-radius: 8px;
+  color: inherit;
+  text-decoration: none;
+  gap: 1rem;
+}
+
+#sidebar nav a:hover {
+  background: #e3e3e3;
+}
+
+#sidebar nav a.active {
+  background: hsl(224, 98%, 58%);
+  color: white;
+}
+
+#sidebar nav a.pending {
+  color: hsl(224, 98%, 58%);
+}
+
+#detail {
+  flex: 1;
+  padding: 2rem 4rem;
+  width: 100%;
+}
+
+#detail.loading {
+  opacity: 0.25;
+  transition: opacity 200ms;
+  transition-delay: 200ms;
+}
+
+#note {
+  max-width: 40rem;
+  display: flex;
+}
+
+#note h1 {
+  font-size: 2rem;
+  font-weight: 700;
+  margin: 0;
+  line-height: 1.2;
+}
+
+#note h1 + p {
+  margin: 0;
+}
+
+#note h1 + p + p {
+  white-space: break-spaces;
+}
+
+#note div[id="tag"] {
+  font-size: 1rem;
+  font-family: inherit;
+  border: none;
+  border-radius: 8px;
+  padding: 0.5rem 0.75rem;
+  box-shadow: 0 0px 1px hsla(0, 0%, 0%, 0.2), 0 1px 2px hsla(0, 0%, 0%, 0.2);
+  background-color: lightcyan;
+  line-height: 1;
+  margin: 0;
+  width: 3rem;
+}
+
+.tag {
+  display: inline-block;
+  border: none;
+  border-radius: 8px;
+  padding: 0.5rem 0.75rem;
+  box-shadow: 0 0px 1px hsla(0, 0%, 0%, 0.2), 0 1px 2px hsla(0, 0%, 0%, 0.2);
+  background-color: lightcyan;
+  line-height: 1;
+  margin: 0;
+}
+
+.tag + .tag {
+  margin-left: 0.5rem;
+}
+
+#note h1:focus {
+  outline: none;
+  color: hsl(224, 98%, 58%);
+}
+
+/* creates nice spacing between buttons */
+#note h1 ~ div {
+  display: flex;
+  gap: 0.5rem;
+  margin: 1rem 0;
+}
+
+#note-form {
+  display: flex;
+  max-width: 40rem;
+  flex-direction: column;
+  gap: 1rem;
+}
+#note-form > p:first-child {
+  margin: 0;
+  padding: 0;
+}
+#note-form > p:first-child > :nth-child(2) {
+  margin-right: 1rem;
+}
+#note-form > p:first-child,
+#note-form label {
+  display: flex;
+}
+#note-form p:first-child span,
+#note-form label span {
+  width: 8rem;
+}
+#note-form p:first-child input,
+#note-form label input,
+#note-form label textarea {
+  flex-grow: 2;
+}
+
+#zero-state {
+  margin: 2rem auto;
+  text-align: center;
+  color: #818181;
+}
+
+#zero-state:before {
+  display: block;
+  margin-bottom: 0.5rem;
+  content: url("https://cdn.iconscout.com/icon/free/png-256/free-notebook-492-910315.png");
+}
+
+#error-page {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+}
